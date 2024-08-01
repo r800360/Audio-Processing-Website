@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 
-const AudioUploader = ({ setDenoisedFile }) => {
+const AudioUploader = () => {
   const [file, setFile] = useState(null);
+  const [denoisedFile, setDenoisedFile] = useState(null);
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
@@ -11,19 +12,44 @@ const AudioUploader = ({ setDenoisedFile }) => {
     const formData = new FormData();
     formData.append("file", file);
 
-    const response = await fetch("http://localhost:5000/upload", {
-      method: "POST",
-      body: formData,
-    });
+    try {
+      const response = await fetch("http://localhost:5000/upload", {
+        method: "POST",
+        body: formData,
+      });
 
-    const data = await response.json();
-    setDenoisedFile(data.denoised_file);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+      console.log("TEST", data.denoised_file);
+      setDenoisedFile(data.denoised_file);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const handleDownload = () => {
+    window.open(`http://localhost:5000/download/${denoisedFile}`);
   };
 
   return (
     <div>
       <input type="file" onChange={handleFileChange} />
       <button onClick={handleUpload}>Upload and Denoise</button>
+      {denoisedFile && (
+        <div>
+          <button onClick={handleDownload}>Download Denoised Audio</button>
+          <audio controls>
+            <source
+              src={`http://localhost:5000/download/${denoisedFile}`}
+              type="audio/wav"
+            />
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+      )}
     </div>
   );
 };
