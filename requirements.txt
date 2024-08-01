@@ -117,7 +117,7 @@ notebook_shim==0.2.3
 numba==0.60.0
 numpy==1.26.3
 opt-einsum==3.3.0
-Orange3-HDF5-Add-on==0.0.0
+# Orange3-HDF5-Add-on==0.0.0
 overrides==7.7.0
 packaging==23.2
 pandas==2.2.0
