@@ -4,7 +4,7 @@ from models.denoising_model import denoise_audio
 import os
 
 
-app = Flask(__name__, static_folder="../audio-frontend/build", static_url_path="/")
+app = Flask(__name__, static_folder="../frontend/build", static_url_path="/")
 
 CORS(app)  # Enable CORS for all routes
 
