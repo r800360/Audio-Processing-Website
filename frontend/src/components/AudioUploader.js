@@ -13,7 +13,7 @@ const AudioUploader = () => {
     formData.append("file", file);
 
     try {
-      const response = await fetch("http://localhost:5000/upload", {
+      const response = await fetch("https://rosachdeva.pythonanywhere.com/upload", {
         method: "POST",
         body: formData,
       });
@@ -31,7 +31,7 @@ const AudioUploader = () => {
   };
 
   const handleDownload = () => {
-    window.open(`http://localhost:5000/download/${denoisedFile}`);
+    window.open(`https://rosachdeva.pythonanywhere.com/download/${denoisedFile}`);
   };
 
   return (
@@ -43,7 +43,7 @@ const AudioUploader = () => {
           <button onClick={handleDownload}>Download Denoised Audio</button>
           <audio controls>
             <source
-              src={`http://localhost:5000/download/${denoisedFile}`}
+              src={`https://rosachdeva.pythonanywhere.com/download/${denoisedFile}`}
               type="audio/wav"
             />
             Your browser does not support the audio element.
